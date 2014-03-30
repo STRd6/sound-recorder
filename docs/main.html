@@ -38,10 +38,16 @@
 AudioContext = window.AudioContext <span class="keyword">or</span> window.webkitAudioContext
 Recorder = require <span class="string">"./lib/recorder"</span>
 saveAs = require <span class="string">"./lib/file_saver"</span>
+Viz = require <span class="string">"./lib/viz"</span>
+
+{applyStylesheet} = require <span class="string">"./lib/util"</span>
+applyStylesheet require <span class="string">"./style"</span>
 
 <span class="function"><span class="title">createAudio</span></span> = (stream) -&gt;
   context = <span class="keyword">new</span> AudioContext
   microphone = context.createMediaStreamSource(stream)
+
+  canvas = createCanvas()
 
   recorder = <span class="keyword">new</span> Recorder(microphone)
   recorder.record()
@@ -50,15 +56,44 @@ saveAs = require <span class="string">"./lib/file_saver"</span>
     recorder.stop()
     recorder.exportWAV (blob) -&gt;
       saveAs blob, <span class="string">"duder.wav"</span>
-  , <span class="number">2000</span>
+  , <span class="number">10000</span>
 
   microphone.connect(context.destination)
+
+  analyser = context.createAnalyser()
+  analyser.smoothingTimeConstant = <span class="number">0</span>
+
+  viz = Viz(analyser)
+
+  <span class="function"><span class="title">draw</span></span> = -&gt;
+    viz.draw(canvas)
+    requestAnimationFrame draw
+
+  requestAnimationFrame draw
+
+  microphone.connect(analyser)
 
 <span class="function"><span class="title">createVideo</span></span> = (stream) -&gt;
   video = document.createElement(<span class="string">"video"</span>)
   video.autoplay = <span class="literal">true</span>
   document.body.appendChild video
   video.src = window.URL.createObjectURL(stream)
+
+<span class="function"><span class="title">createCanvas</span></span> = -&gt;
+  Canvas = require <span class="string">"pixie-canvas"</span>
+
+  canvas = Canvas()
+
+  <span class="function"><span class="title">handleResize</span></span> =  -&gt;
+    canvas.width(window.innerWidth)
+    canvas.height(window.innerHeight)
+
+  handleResize()
+  window.addEventListener <span class="string">"resize"</span>, handleResize, <span class="literal">false</span>
+
+  document.body.appendChild canvas.element()
+
+  <span class="keyword">return</span> canvas
 
 <span class="keyword">if</span> PACKAGE.name <span class="keyword">is</span> <span class="string">"ROOT"</span>
   <span class="function"><span class="title">error</span></span> = -&gt;

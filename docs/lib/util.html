@@ -2,7 +2,7 @@
 
 <html>
 <head>
-  <title>index</title>
+  <title>lib/util</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
   <link rel="stylesheet" media="all" href="http://strd6.github.io/cdn/parallel/docco.css" />
@@ -18,7 +18,7 @@
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
-              <h1 id="sound-recorder">Sound Recorder</h1>
+              <h1 id="util">Util</h1>
 
             </div>
             <div class="content"><pre><code class="lang-coffeescript">
@@ -34,71 +34,16 @@
               </div>
               
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">getUserMedia = require <span class="string">"./lib/get_user_media"</span>
-AudioContext = window.AudioContext <span class="keyword">or</span> window.webkitAudioContext
-Recorder = require <span class="string">"./lib/recorder"</span>
-saveAs = require <span class="string">"./lib/file_saver"</span>
-Viz = require <span class="string">"./lib/viz"</span>
+            <div class="content"><pre><code class="lang-coffeescript">module.exports =
+  applyStylesheet: (style, id=<span class="string">"primary"</span>) -&gt;
+    styleNode = document.createElement(<span class="string">"style"</span>)
+    styleNode.innerHTML = style
+    styleNode.id = id
 
-{applyStylesheet} = require <span class="string">"./lib/util"</span>
-applyStylesheet require <span class="string">"./style"</span>
+    <span class="keyword">if</span> previousStyleNode = document.head.querySelector(<span class="string">"style#<span class="subst">#{id}</span>"</span>)
+      previousStyleNode.parentNode.removeChild(prevousStyleNode)
 
-<span class="function"><span class="title">createAudio</span></span> = (stream) -&gt;
-  context = <span class="keyword">new</span> AudioContext
-  microphone = context.createMediaStreamSource(stream)
-
-  canvas = createCanvas()
-
-  recorder = <span class="keyword">new</span> Recorder(microphone)
-  recorder.record()
-
-  setTimeout -&gt;
-    recorder.stop()
-    recorder.exportWAV (blob) -&gt;
-      saveAs blob, <span class="string">"duder.wav"</span>
-  , <span class="number">10000</span>
-
-  microphone.connect(context.destination)
-
-  analyser = context.createAnalyser()
-  analyser.smoothingTimeConstant = <span class="number">0</span>
-
-  viz = Viz(analyser)
-
-  <span class="function"><span class="title">draw</span></span> = -&gt;
-    viz.draw(canvas)
-    requestAnimationFrame draw
-
-  requestAnimationFrame draw
-
-  microphone.connect(analyser)
-
-<span class="function"><span class="title">createVideo</span></span> = (stream) -&gt;
-  video = document.createElement(<span class="string">"video"</span>)
-  video.autoplay = <span class="literal">true</span>
-  document.body.appendChild video
-  video.src = window.URL.createObjectURL(stream)
-
-<span class="function"><span class="title">createCanvas</span></span> = -&gt;
-  Canvas = require <span class="string">"pixie-canvas"</span>
-
-  canvas = Canvas()
-
-  <span class="function"><span class="title">handleResize</span></span> =  -&gt;
-    canvas.width(window.innerWidth)
-    canvas.height(window.innerHeight)
-
-  handleResize()
-  window.addEventListener <span class="string">"resize"</span>, handleResize, <span class="literal">false</span>
-
-  document.body.appendChild canvas.element()
-
-  <span class="keyword">return</span> canvas
-
-<span class="keyword">if</span> PACKAGE.name <span class="keyword">is</span> <span class="string">"ROOT"</span>
-  <span class="function"><span class="title">error</span></span> = -&gt;
-    console.log arguments
-  getUserMedia({audio: <span class="literal">true</span>, video: <span class="literal">true</span>}, createAudio, error)</code></pre>
+    document.head.appendChild(styleNode)</code></pre>
 </div>
         </li>
         
@@ -239,6 +184,6 @@ applyStylesheet require <span class="string">"./style"</span>
 
 }).call(this);
 
-</script><script src="package.js"></script>
+</script><script src="../package.js"></script>
 </body>
 </html>
