@@ -8,6 +8,10 @@ Recorder Model
       recorder = new Recorder(input)
 
       self =
+        recordingClass: ->
+          if self.recording()
+            "recording"
+
         recording: Observable false
         play: ->
           console.log "Play"
