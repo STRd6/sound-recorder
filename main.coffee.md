@@ -11,6 +11,8 @@ Sound Recorder
     {applyStylesheet} = require "./lib/util"
     applyStylesheet require "./style"
 
+Create an audio stream an capture it for recording and display.
+
     createAudio = (stream) ->
       context = new AudioContext
       microphone = context.createMediaStreamSource(stream)
@@ -38,11 +40,15 @@ Sound Recorder
 
       microphone.connect(analyser)
 
+Create a video stream from the webcam for testing.
+
     createVideo = (stream) ->
       video = document.createElement("video")
       video.autoplay = true
       document.body.appendChild video
       video.src = window.URL.createObjectURL(stream)
+
+Create a canvas that covers the entire window so we can draw our wave forms.
 
     createCanvas = ->
       Canvas = require "pixie-canvas"
@@ -65,3 +71,7 @@ Sound Recorder
 
     if PACKAGE.name is "ROOT"
       getUserMedia({audio: true}, createAudio, error)
+
+      postmaster = require("postmaster")()
+
+      # TODO: Broadcast saved file to parent
