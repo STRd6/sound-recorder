@@ -34,10 +34,11 @@
               </div>
               
             </div>
-            <div class="content"><pre><code class="lang-coffeescript">getUserMedia = require <span class="string">"./lib/get_user_media"</span>
+            <div class="content"><pre><code class="lang-coffeescript">global.Observable = require <span class="string">"observable"</span>
+
+getUserMedia = require <span class="string">"./lib/get_user_media"</span>
 AudioContext = window.AudioContext <span class="keyword">or</span> window.webkitAudioContext
-Recorder = require <span class="string">"./lib/recorder"</span>
-saveAs = require <span class="string">"./lib/file_saver"</span>
+Model = require(<span class="string">"./model"</span>)
 Viz = require <span class="string">"./lib/viz"</span>
 
 {applyStylesheet} = require <span class="string">"./lib/util"</span>
@@ -47,18 +48,15 @@ applyStylesheet require <span class="string">"./style"</span>
   context = <span class="keyword">new</span> AudioContext
   microphone = context.createMediaStreamSource(stream)
 
-  canvas = createCanvas()
-
-  recorder = <span class="keyword">new</span> Recorder(microphone)
-  recorder.record()
-
-  setTimeout -&gt;
-    recorder.stop()
-    recorder.exportWAV (blob) -&gt;
-      saveAs blob, <span class="string">"duder.wav"</span>
-  , <span class="number">10000</span>
-
+  <span class="comment"># Output the audio, remember to use headphones or studio monitors!</span>
   microphone.connect(context.destination)
+
+  model = Model
+    input: microphone
+
+  document.body.appendChild require(<span class="string">"./template"</span>)(model)
+
+  canvas = createCanvas()
 
   analyser = context.createAnalyser()
   analyser.smoothingTimeConstant = <span class="number">0</span>
@@ -95,10 +93,11 @@ applyStylesheet require <span class="string">"./style"</span>
 
   <span class="keyword">return</span> canvas
 
+<span class="function"><span class="title">error</span></span> = -&gt;
+  console.log arguments
+
 <span class="keyword">if</span> PACKAGE.name <span class="keyword">is</span> <span class="string">"ROOT"</span>
-  <span class="function"><span class="title">error</span></span> = -&gt;
-    console.log arguments
-  getUserMedia({audio: <span class="literal">true</span>, video: <span class="literal">true</span>}, createAudio, error)</code></pre>
+  getUserMedia({audio: <span class="literal">true</span>}, createAudio, error)</code></pre>
 </div>
         </li>
         
