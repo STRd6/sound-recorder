@@ -42,9 +42,20 @@ Model = require(<span class="string">"./model"</span>)
 Viz = require <span class="string">"./lib/viz"</span>
 
 {applyStylesheet} = require <span class="string">"./lib/util"</span>
-applyStylesheet require <span class="string">"./style"</span>
+applyStylesheet require <span class="string">"./style"</span></code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Create an audio stream an capture it for recording and display.</p>
 
-<span class="function"><span class="title">createAudio</span></span> = (stream) -&gt;
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">createAudio</span></span> = (stream) -&gt;
   context = <span class="keyword">new</span> AudioContext
   microphone = context.createMediaStreamSource(stream)
 
@@ -69,15 +80,37 @@ applyStylesheet require <span class="string">"./style"</span>
 
   requestAnimationFrame draw
 
-  microphone.connect(analyser)
+  microphone.connect(analyser)</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Create a video stream from the webcam for testing.</p>
 
-<span class="function"><span class="title">createVideo</span></span> = (stream) -&gt;
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">createVideo</span></span> = (stream) -&gt;
   video = document.createElement(<span class="string">"video"</span>)
   video.autoplay = <span class="literal">true</span>
   document.body.appendChild video
-  video.src = window.URL.createObjectURL(stream)
+  video.src = window.URL.createObjectURL(stream)</code></pre>
+</div>
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              <div class="pilwrap">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Create a canvas that covers the entire window so we can draw our wave forms.</p>
 
-<span class="function"><span class="title">createCanvas</span></span> = -&gt;
+            </div>
+            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">createCanvas</span></span> = -&gt;
   Canvas = require <span class="string">"pixie-canvas"</span>
 
   canvas = Canvas()
@@ -97,7 +130,11 @@ applyStylesheet require <span class="string">"./style"</span>
   console.log arguments
 
 <span class="keyword">if</span> PACKAGE.name <span class="keyword">is</span> <span class="string">"ROOT"</span>
-  getUserMedia({audio: <span class="literal">true</span>}, createAudio, error)</code></pre>
+  getUserMedia({audio: <span class="literal">true</span>}, createAudio, error)
+
+  postmaster = require(<span class="string">"postmaster"</span>)()
+
+  <span class="comment"># TODO: Broadcast saved file to parent</span></code></pre>
 </div>
         </li>
         
