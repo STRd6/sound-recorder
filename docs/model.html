@@ -41,6 +41,10 @@ module.<span class="function"><span class="title">exports</span></span> = ({inpu
   recorder = <span class="keyword">new</span> Recorder(input)
 
   self =
+    recordingClass: -&gt;
+      <span class="keyword">if</span> self.recording()
+        <span class="string">"recording"</span>
+
     recording: Observable <span class="literal">false</span>
     play: -&gt;
       console.log <span class="string">"Play"</span>

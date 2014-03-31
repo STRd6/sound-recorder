@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="manifest.appcache?1396224848703">
+<html manifest="manifest.appcache?1396224996061">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -240,19 +240,19 @@ require('./main')
     "style.styl": {
       "path": "style.styl",
       "mode": "100644",
-      "content": "html\n  height: 100%\n\nbody\n  height: 100%\n  margin: 0\n  overflow: hidden\n\n.actions\n  position: absolute\n  top: 0\n  right: 0\n",
+      "content": "html\n  height: 100%\n\nbody\n  height: 100%\n  margin: 0\n  overflow: hidden\n\n.actions\n  position: absolute\n  top: 0\n  right: 0\n\n  button.recording\n    color: red\n",
       "type": "blob"
     },
     "template.haml": {
       "path": "template.haml",
       "mode": "100644",
-      "content": ".actions\n  %button.save \n    - on \"click\", @save\n  %button.stop ■\n    - on \"click\", @stop\n  %button.play ▸\n    - on \"click\", @play\n  %button.record ●\n    - on \"click\", @record\n",
+      "content": ".actions\n  %button.save \n    - on \"click\", @save\n  %button.stop ■\n    - on \"click\", @stop\n  %button.play ▸\n    - on \"click\", @play\n  %button.record(class=@recordingClass) ●\n    - on \"click\", @record\n",
       "type": "blob"
     },
     "model.coffee.md": {
       "path": "model.coffee.md",
       "mode": "100644",
-      "content": "Recorder Model\n==============\n\n    Recorder = require \"./lib/recorder\"\n    saveAs = require \"./lib/file_saver\"\n\n    module.exports = ({input}) ->\n      recorder = new Recorder(input)\n\n      self =\n        recording: Observable false\n        play: ->\n          console.log \"Play\"\n          # TODO: Play back recorded sound\n        record: ->\n          self.recording !self.recording()\n        stop: ->\n          self.recording false\n        save: ->\n          self.recording false\n\n          if name = prompt \"Filename\", \"untitled.wav\"\n            recorder.exportWAV (blob) ->\n              saveAs blob, name\n\n      self.recording.observe (newValue) ->\n        if newValue\n          recorder.record()\n        else\n          recorder.stop()\n\n      return self\n",
+      "content": "Recorder Model\n==============\n\n    Recorder = require \"./lib/recorder\"\n    saveAs = require \"./lib/file_saver\"\n\n    module.exports = ({input}) ->\n      recorder = new Recorder(input)\n\n      self =\n        recordingClass: ->\n          if self.recording()\n            \"recording\"\n\n        recording: Observable false\n        play: ->\n          console.log \"Play\"\n          # TODO: Play back recorded sound\n        record: ->\n          self.recording !self.recording()\n        stop: ->\n          self.recording false\n        save: ->\n          self.recording false\n\n          if name = prompt \"Filename\", \"untitled.wav\"\n            recorder.exportWAV (blob) ->\n              saveAs blob, name\n\n      self.recording.observe (newValue) ->\n        if newValue\n          recorder.record()\n        else\n          recorder.stop()\n\n      return self\n",
       "type": "blob"
     }
   },
@@ -299,17 +299,17 @@ require('./main')
     },
     "style": {
       "path": "style",
-      "content": "module.exports = \"html {\\n  height: 100%;\\n}\\n\\nbody {\\n  height: 100%;\\n  margin: 0;\\n  overflow: hidden;\\n}\\n\\n.actions {\\n  position: absolute;\\n  top: 0;\\n  right: 0;\\n}\";",
+      "content": "module.exports = \"html {\\n  height: 100%;\\n}\\n\\nbody {\\n  height: 100%;\\n  margin: 0;\\n  overflow: hidden;\\n}\\n\\n.actions {\\n  position: absolute;\\n  top: 0;\\n  right: 0;\\n}\\n\\n.actions button.recording {\\n  color: red;\\n}\";",
       "type": "blob"
     },
     "template": {
       "path": "template",
-      "content": "Runtime = require(\"/_lib/hamljr_runtime\");\n\nmodule.exports = (function(data) {\n  return (function() {\n    var __runtime;\n    __runtime = Runtime(this);\n    __runtime.push(document.createDocumentFragment());\n    __runtime.push(document.createElement(\"div\"));\n    __runtime.classes(\"actions\");\n    __runtime.push(document.createElement(\"button\"));\n    __runtime.classes(\"save\");\n    __runtime.text(\"\\n\");\n    __runtime.on(\"click\", this.save);\n    __runtime.pop();\n    __runtime.push(document.createElement(\"button\"));\n    __runtime.classes(\"stop\");\n    __runtime.text(\"■\\n\");\n    __runtime.on(\"click\", this.stop);\n    __runtime.pop();\n    __runtime.push(document.createElement(\"button\"));\n    __runtime.classes(\"play\");\n    __runtime.text(\"▸\\n\");\n    __runtime.on(\"click\", this.play);\n    __runtime.pop();\n    __runtime.push(document.createElement(\"button\"));\n    __runtime.classes(\"record\");\n    __runtime.text(\"●\\n\");\n    __runtime.on(\"click\", this.record);\n    __runtime.pop();\n    __runtime.pop();\n    return __runtime.pop();\n  }).call(data);\n});\n",
+      "content": "Runtime = require(\"/_lib/hamljr_runtime\");\n\nmodule.exports = (function(data) {\n  return (function() {\n    var __runtime;\n    __runtime = Runtime(this);\n    __runtime.push(document.createDocumentFragment());\n    __runtime.push(document.createElement(\"div\"));\n    __runtime.classes(\"actions\");\n    __runtime.push(document.createElement(\"button\"));\n    __runtime.classes(\"save\");\n    __runtime.text(\"\\n\");\n    __runtime.on(\"click\", this.save);\n    __runtime.pop();\n    __runtime.push(document.createElement(\"button\"));\n    __runtime.classes(\"stop\");\n    __runtime.text(\"■\\n\");\n    __runtime.on(\"click\", this.stop);\n    __runtime.pop();\n    __runtime.push(document.createElement(\"button\"));\n    __runtime.classes(\"play\");\n    __runtime.text(\"▸\\n\");\n    __runtime.on(\"click\", this.play);\n    __runtime.pop();\n    __runtime.push(document.createElement(\"button\"));\n    __runtime.classes(\"record\", this.recordingClass);\n    __runtime.text(\"●\\n\");\n    __runtime.on(\"click\", this.record);\n    __runtime.pop();\n    __runtime.pop();\n    return __runtime.pop();\n  }).call(data);\n});\n",
       "type": "blob"
     },
     "model": {
       "path": "model",
-      "content": "(function() {\n  var Recorder, saveAs;\n\n  Recorder = require(\"./lib/recorder\");\n\n  saveAs = require(\"./lib/file_saver\");\n\n  module.exports = function(_arg) {\n    var input, recorder, self;\n    input = _arg.input;\n    recorder = new Recorder(input);\n    self = {\n      recording: Observable(false),\n      play: function() {\n        return console.log(\"Play\");\n      },\n      record: function() {\n        return self.recording(!self.recording());\n      },\n      stop: function() {\n        return self.recording(false);\n      },\n      save: function() {\n        var name;\n        self.recording(false);\n        if (name = prompt(\"Filename\", \"untitled.wav\")) {\n          return recorder.exportWAV(function(blob) {\n            return saveAs(blob, name);\n          });\n        }\n      }\n    };\n    self.recording.observe(function(newValue) {\n      if (newValue) {\n        return recorder.record();\n      } else {\n        return recorder.stop();\n      }\n    });\n    return self;\n  };\n\n}).call(this);\n",
+      "content": "(function() {\n  var Recorder, saveAs;\n\n  Recorder = require(\"./lib/recorder\");\n\n  saveAs = require(\"./lib/file_saver\");\n\n  module.exports = function(_arg) {\n    var input, recorder, self;\n    input = _arg.input;\n    recorder = new Recorder(input);\n    self = {\n      recordingClass: function() {\n        if (self.recording()) {\n          return \"recording\";\n        }\n      },\n      recording: Observable(false),\n      play: function() {\n        return console.log(\"Play\");\n      },\n      record: function() {\n        return self.recording(!self.recording());\n      },\n      stop: function() {\n        return self.recording(false);\n      },\n      save: function() {\n        var name;\n        self.recording(false);\n        if (name = prompt(\"Filename\", \"untitled.wav\")) {\n          return recorder.exportWAV(function(blob) {\n            return saveAs(blob, name);\n          });\n        }\n      }\n    };\n    self.recording.observe(function(newValue) {\n      if (newValue) {\n        return recorder.record();\n      } else {\n        return recorder.stop();\n      }\n    });\n    return self;\n  };\n\n}).call(this);\n",
       "type": "blob"
     },
     "_lib/hamljr_runtime": {
