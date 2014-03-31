@@ -1,1 +1,9 @@
-%input(type="file" accept="image/*;capture=camera")
+.actions
+  %button.save 
+    - on "click", @save
+  %button.stop ■
+    - on "click", @stop
+  %button.play ▸
+    - on "click", @play
+  %button.record ●
+    - on "click", @record
