@@ -59,9 +59,6 @@ applyStylesheet require <span class="string">"./style"</span></code></pre>
   context = <span class="keyword">new</span> AudioContext
   microphone = context.createMediaStreamSource(stream)
 
-  <span class="comment"># Output the audio, remember to use headphones or studio monitors!</span>
-  microphone.connect(context.destination)
-
   model = Model
     input: microphone
 
