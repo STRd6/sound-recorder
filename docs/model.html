@@ -49,7 +49,6 @@ module.<span class="function"><span class="title">exports</span></span> = ({inpu
 
     recording: Observable <span class="literal">false</span>
     play: -&gt;
-      console.log <span class="string">"Play"</span>
       self.recording <span class="literal">false</span>
       recorder.exportWAV (blob) -&gt;
         player.src = URL.createObjectURL(blob)
@@ -57,6 +56,7 @@ module.<span class="function"><span class="title">exports</span></span> = ({inpu
 
     record: -&gt;
       self.recording !self.recording()
+      recorder.clear() <span class="keyword">if</span> self.recording()
     stop: -&gt;
       self.recording <span class="literal">false</span>
     save: -&gt;
