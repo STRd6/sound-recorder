@@ -16,7 +16,6 @@ Recorder Model
 
         recording: Observable false
         play: ->
-          console.log "Play"
           self.recording false
           recorder.exportWAV (blob) ->
             player.src = URL.createObjectURL(blob)
@@ -24,6 +23,7 @@ Recorder Model
 
         record: ->
           self.recording !self.recording()
+          recorder.clear() if self.recording()
         stop: ->
           self.recording false
         save: ->
