@@ -7,6 +7,8 @@ Recorder Model
     module.exports = ({input}) ->
       recorder = new Recorder(input)
 
+      player = document.createElement "audio"
+
       self =
         recordingClass: ->
           if self.recording()
@@ -15,7 +17,11 @@ Recorder Model
         recording: Observable false
         play: ->
           console.log "Play"
-          # TODO: Play back recorded sound
+          self.recording false
+          recorder.exportWAV (blob) ->
+            player.src = URL.createObjectURL(blob)
+            player.play()
+
         record: ->
           self.recording !self.recording()
         stop: ->

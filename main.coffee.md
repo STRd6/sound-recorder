@@ -17,9 +17,6 @@ Create an audio stream an capture it for recording and display.
       context = new AudioContext
       microphone = context.createMediaStreamSource(stream)
 
-      # Output the audio, remember to use headphones or studio monitors!
-      microphone.connect(context.destination)
-
       model = Model
         input: microphone
 
