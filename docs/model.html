@@ -36,8 +36,11 @@
             </div>
             <div class="content"><pre><code class="lang-coffeescript">Recorder = require <span class="string">"./lib/recorder"</span>
 saveAs = require <span class="string">"./lib/file_saver"</span>
+S3Trinket = require <span class="string">"s3-trinket"</span>
 
-module.<span class="function"><span class="title">exports</span></span> = ({input}) -&gt;
+trinket = S3Trinket(JSON.parse(localStorage.TRINKET_POLICY))
+
+module.<span class="function"><span class="title">exports</span></span> = ({input, notifications}) -&gt;
   recorder = <span class="keyword">new</span> Recorder(input)
 
   player = document.createElement <span class="string">"audio"</span>
@@ -62,9 +65,11 @@ module.<span class="function"><span class="title">exports</span></span> = ({inpu
     save: -&gt;
       self.recording <span class="literal">false</span>
 
-      <span class="keyword">if</span> name = prompt <span class="string">"Filename"</span>, <span class="string">"untitled.wav"</span>
-        recorder.exportWAV (blob) -&gt;
-          saveAs blob, name
+      notifications.push <span class="string">"Saving..."</span>
+
+      recorder.exportWAV (blob) -&gt;
+        trinket.post(blob).<span class="keyword">then</span> (key) -&gt;
+          notifications.notify <span class="string">"Saved as <span class="subst">#{key}</span>"</span>
 
   self.recording.observe (newValue) -&gt;
     <span class="keyword">if</span> newValue
@@ -79,7 +84,8 @@ module.<span class="function"><span class="title">exports</span></span> = ({inpu
     </ul>
   </div>
   <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script><script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script>
   (function() {
   var ErrorReporter, bindUpdates, createEditor, exec, findInteractiveElements, readShebang, runners;
 

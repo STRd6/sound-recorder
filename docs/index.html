@@ -39,7 +39,13 @@
 getUserMedia = require <span class="string">"./lib/get_user_media"</span>
 AudioContext = window.AudioContext <span class="keyword">or</span> window.webkitAudioContext
 Model = require(<span class="string">"./model"</span>)
+Notifications = require <span class="string">"notifications"</span>
 Viz = require <span class="string">"./lib/viz"</span>
+
+notifications = Notifications()
+document.body.appendChild notifications.view
+
+notifications.push <span class="string">"Enable microphone access!"</span>
 
 {applyStylesheet} = require <span class="string">"./lib/util"</span>
 applyStylesheet require <span class="string">"./style"</span></code></pre>
@@ -61,6 +67,7 @@ applyStylesheet require <span class="string">"./style"</span></code></pre>
 
   model = Model
     input: microphone
+    notifications: notifications
 
   document.body.appendChild require(<span class="string">"./template"</span>)(model)
 
@@ -77,7 +84,9 @@ applyStylesheet require <span class="string">"./style"</span></code></pre>
 
   requestAnimationFrame draw
 
-  microphone.connect(analyser)</code></pre>
+  microphone.connect(analyser)
+
+  notifications.notify <span class="string">"Ready!"</span></code></pre>
 </div>
         </li>
         
@@ -86,23 +95,6 @@ applyStylesheet require <span class="string">"./style"</span></code></pre>
             <div class="annotation">
               <div class="pilwrap">
                 <a class="pilcrow" href="#section-4">&#182;</a>
-              </div>
-              <p>Create a video stream from the webcam for testing.</p>
-
-            </div>
-            <div class="content"><pre><code class="lang-coffeescript"><span class="function"><span class="title">createVideo</span></span> = (stream) -&gt;
-  video = document.createElement(<span class="string">"video"</span>)
-  video.autoplay = <span class="literal">true</span>
-  document.body.appendChild video
-  video.src = window.URL.createObjectURL(stream)</code></pre>
-</div>
-        </li>
-        
-        
-        <li id="section-5">
-            <div class="annotation">
-              <div class="pilwrap">
-                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>Create a canvas that covers the entire window so we can draw our wave forms.</p>
 
@@ -138,7 +130,8 @@ applyStylesheet require <span class="string">"./style"</span></code></pre>
     </ul>
   </div>
   <script src="https://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script><script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/coffee-script/1.6.3/coffee-script.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script>
   (function() {
   var ErrorReporter, bindUpdates, createEditor, exec, findInteractiveElements, readShebang, runners;
 
