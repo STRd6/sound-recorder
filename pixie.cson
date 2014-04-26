@@ -1,5 +1,10 @@
 version: "0.1.0"
+remoteDependencies: [
+  "https://code.jquery.com/jquery-1.11.0.min.js"
+]
 dependencies:
-  "observable": "distri/observable:v0.1.0"
+  notifications: "distri/notifications:v0.3.2"
+  observable: "distri/observable:v0.1.1"
   "pixie-canvas": "distri/pixie-canvas:v0.9.2"
-  "postmaster": "distri/postmaster:v0.2.2"
+  postmaster: "distri/postmaster:v0.2.2"
+  "s3-trinket": "distri/s3-trinket:v0.1.1"

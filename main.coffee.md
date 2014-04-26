@@ -6,7 +6,13 @@ Sound Recorder
     getUserMedia = require "./lib/get_user_media"
     AudioContext = window.AudioContext or window.webkitAudioContext
     Model = require("./model")
+    Notifications = require "notifications"
     Viz = require "./lib/viz"
+
+    notifications = Notifications()
+    document.body.appendChild notifications.view
+
+    notifications.push "Enable microphone access!"
 
     {applyStylesheet} = require "./lib/util"
     applyStylesheet require "./style"
@@ -19,6 +25,7 @@ Create an audio stream an capture it for recording and display.
 
       model = Model
         input: microphone
+        notifications: notifications
 
       document.body.appendChild require("./template")(model)
 
@@ -37,13 +44,7 @@ Create an audio stream an capture it for recording and display.
 
       microphone.connect(analyser)
 
-Create a video stream from the webcam for testing.
-
-    createVideo = (stream) ->
-      video = document.createElement("video")
-      video.autoplay = true
-      document.body.appendChild video
-      video.src = window.URL.createObjectURL(stream)
+      notifications.notify "Ready!"
 
 Create a canvas that covers the entire window so we can draw our wave forms.
 
