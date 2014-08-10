@@ -1,9 +1,5 @@
 .actions
-  %button.save 
-    - on "click", @save
-  %button.stop ■
-    - on "click", @stop
-  %button.play ▸
-    - on "click", @play
-  %button.record(class=@recordingClass) ●
-    - on "click", @record
+  %button.save(click=@save) 
+  %button.stop(click=@stop) ■
+  %button.play(click=@play) ▸
+  %button.record(class=@recordingClass click=@record) ●
