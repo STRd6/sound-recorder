@@ -5,7 +5,8 @@ Recorder Model
     saveAs = require "./lib/file_saver"
     S3Trinket = require "s3-trinket"
 
-    trinket = S3Trinket(JSON.parse(localStorage.TRINKET_POLICY))
+    if localStorage.TRINKET_POLICY
+      trinket = S3Trinket(JSON.parse(localStorage.TRINKET_POLICY))
 
     module.exports = ({input, notifications}) ->
       recorder = new Recorder(input)
@@ -35,8 +36,11 @@ Recorder Model
           notifications.push "Saving..."
 
           recorder.exportWAV (blob) ->
-            trinket.post(blob).then (key) ->
-              notifications.notify "Saved as #{key}"
+            if trinket
+              trinket.post(blob).then (key) ->
+                notifications.notify "Saved as #{key}"
+            else if name = prompt "Filename", "untitled.wav"
+              saveAs blob, name
 
       self.recording.observe (newValue) ->
         if newValue
