@@ -38,7 +38,8 @@
 saveAs = require <span class="string">"./lib/file_saver"</span>
 S3Trinket = require <span class="string">"s3-trinket"</span>
 
-trinket = S3Trinket(JSON.parse(localStorage.TRINKET_POLICY))
+<span class="keyword">if</span> localStorage.TRINKET_POLICY
+  trinket = S3Trinket(JSON.parse(localStorage.TRINKET_POLICY))
 
 module.<span class="function"><span class="title">exports</span></span> = ({input, notifications}) -&gt;
   recorder = <span class="keyword">new</span> Recorder(input)
@@ -68,8 +69,11 @@ module.<span class="function"><span class="title">exports</span></span> = ({inpu
       notifications.push <span class="string">"Saving..."</span>
 
       recorder.exportWAV (blob) -&gt;
-        trinket.post(blob).<span class="keyword">then</span> (key) -&gt;
-          notifications.notify <span class="string">"Saved as <span class="subst">#{key}</span>"</span>
+        <span class="keyword">if</span> trinket
+          trinket.post(blob).<span class="keyword">then</span> (key) -&gt;
+            notifications.notify <span class="string">"Saved as <span class="subst">#{key}</span>"</span>
+        <span class="keyword">else</span> <span class="keyword">if</span> name = prompt <span class="string">"Filename"</span>, <span class="string">"untitled.wav"</span>
+          saveAs blob, name
 
   self.recording.observe (newValue) -&gt;
     <span class="keyword">if</span> newValue
