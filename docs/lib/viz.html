@@ -35,31 +35,53 @@
               
             </div>
             <div class="content"><pre><code class="lang-coffeescript">module.<span class="function"><span class="title">exports</span></span> = (analyser) -&gt;
-  frequencyDomain = <span class="keyword">new</span> Uint8Array(analyser.frequencyBinCount)
-  timeDomain = <span class="keyword">new</span> Uint8Array(analyser.frequencyBinCount)
+  bins = analyser.frequencyBinCount
+  frequencyDomain = <span class="keyword">new</span> Uint8Array(bins)
+  timeDomain = <span class="keyword">new</span> Uint8Array(bins)
 
   draw: (canvas) -&gt;
-    canvas.fill <span class="string">"black"</span>
-
     analyser.getByteFrequencyData(frequencyDomain)
     analyser.getByteTimeDomainData(timeDomain)
 
+    canvas.fill <span class="string">"black"</span>
+
+    width = canvas.width()
+    height = canvas.height()
+    ctx = canvas.context()
+    ratio = height / <span class="number">256</span>
+    step = width / bins
+
+    ctx.fillStyle = <span class="string">"#00F"</span>
+
+    ctx.beginPath()
+    ctx.moveTo(<span class="number">0</span>, height)
+
     <span class="comment"># Draw waveforms or frequency spectrum</span>
-    ratio = canvas.height() / <span class="number">255</span>
     Array::forEach.call frequencyDomain, (value, index) -&gt;
-      canvas.drawRect
-        x: index
-        y: ratio * (<span class="number">255</span> - value)
-        width: <span class="number">1</span>
-        height: ratio * value
-        color: <span class="string">"blue"</span>
+      x = index * step
+      y = ratio * (<span class="number">256</span> - value)
+
+      ctx.lineTo x, y
+
+    console.log bins * step
+
+    ctx.lineTo(width, height)
+    ctx.fill()
+
+    ctx.lineWidth = <span class="number">2</span>
+    ctx.strokeStyle = <span class="string">"#F00"</span>
 
     Array::forEach.call timeDomain, (value, index) -&gt;
-      canvas.drawCircle
-        x: index
-        y: ratio * (<span class="number">255</span> - value)
-        radius: <span class="number">1</span>
-        color: <span class="string">"red"</span></code></pre>
+      x = index * step
+      y = ratio * (<span class="number">256</span> - value)
+
+      <span class="keyword">if</span> index <span class="keyword">is</span> <span class="number">0</span>
+        ctx.beginPath()
+        ctx.moveTo x, y
+      <span class="keyword">else</span>
+        ctx.lineTo x, y
+
+    ctx.stroke()</code></pre>
 </div>
         </li>
         
