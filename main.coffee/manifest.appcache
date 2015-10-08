@@ -1,0 +1,12 @@
+CACHE MANIFEST
+# 1444339521732
+
+CACHE:
+index.html
+../main.coffee.json.js
+https://code.jquery.com/jquery-1.11.0.min.js
+
+NETWORK:
+https://*
+http://*
+*
