@@ -30,8 +30,6 @@ Audio Viz
 
           ctx.lineTo x, y
 
-        console.log bins * step
-
         ctx.lineTo(width, height)
         ctx.fill()
 
