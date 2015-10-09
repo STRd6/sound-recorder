@@ -228,7 +228,7 @@
     },
     "style.styl": {
       "path": "style.styl",
-      "content": "*\n  box-sizing: border-box\n\nhtml\n  height: 100%\n\nbody\n  background-color: black\n  height: 100%\n  margin: 0\n  overflow: hidden\n\n.actions\n  position: absolute\n  top: 0\n  right: 0\n\n  button.recording\n    color: red\n\n.console-wrap\n  position: absolute\n  height: 2em\n  padding: 1em\n  width: 100%\n  overflow: auto\n\n  .notices\n    color: lime\n\n  pre\n    margin: 0\n",
+      "content": "*\n  box-sizing: border-box\n\nhtml\n  height: 100%\n\nbody\n  background-color: black\n  height: 100%\n  margin: 0\n  overflow: hidden\n\n.actions\n  display: inline-flex\n  position: absolute\n  top: 0\n  right: 0\n\n  button.recording\n    color: red\n",
       "mode": "100644",
       "type": "blob"
     },
@@ -287,7 +287,7 @@
     },
     "style": {
       "path": "style",
-      "content": "module.exports = \"* {\\n  -ms-box-sizing: border-box;\\n  -moz-box-sizing: border-box;\\n  -webkit-box-sizing: border-box;\\n  box-sizing: border-box;\\n}\\n\\nhtml {\\n  height: 100%;\\n}\\n\\nbody {\\n  background-color: black;\\n  height: 100%;\\n  margin: 0;\\n  overflow: hidden;\\n}\\n\\n.actions {\\n  position: absolute;\\n  top: 0;\\n  right: 0;\\n}\\n\\n.actions button.recording {\\n  color: red;\\n}\\n\\n.console-wrap {\\n  position: absolute;\\n  height: 2em;\\n  padding: 1em;\\n  width: 100%;\\n  overflow: auto;\\n}\\n\\n.console-wrap .notices {\\n  color: lime;\\n}\\n\\n.console-wrap pre {\\n  margin: 0;\\n}\";",
+      "content": "module.exports = \"* {\\n  -ms-box-sizing: border-box;\\n  -moz-box-sizing: border-box;\\n  -webkit-box-sizing: border-box;\\n  box-sizing: border-box;\\n}\\n\\nhtml {\\n  height: 100%;\\n}\\n\\nbody {\\n  background-color: black;\\n  height: 100%;\\n  margin: 0;\\n  overflow: hidden;\\n}\\n\\n.actions {\\n  display: inline-flex;\\n  position: absolute;\\n  top: 0;\\n  right: 0;\\n}\\n\\n.actions button.recording {\\n  color: red;\\n}\";",
       "type": "blob"
     },
     "template": {
