@@ -4,13 +4,7 @@ global.Observable = require "observable"
 getUserMedia = require "./lib/get_user_media"
 AudioContext = window.AudioContext or window.webkitAudioContext
 Model = require("./model")
-Notifications = require "notifications"
 Viz = require "./lib/viz"
-
-notifications = Notifications()
-document.body.appendChild notifications.view
-
-notifications.push "Enable microphone access!"
 
 {applyStylesheet} = require "./lib/util"
 applyStylesheet require "./style"
@@ -21,7 +15,6 @@ createAudio = (stream) ->
 
   global.model = Model
     input: microphone
-    notifications: notifications
 
   document.body.appendChild require("./template")(model)
 
@@ -39,8 +32,6 @@ createAudio = (stream) ->
   requestAnimationFrame draw
 
   microphone.connect(analyser)
-
-  notifications.notify "Ready!"
 
 createCanvas = ->
   Canvas = require "pixie-canvas"
