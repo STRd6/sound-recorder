@@ -60,7 +60,7 @@ if PACKAGE.name is "ROOT"
 
 
 Postmaster = require("postmaster")
-postmaster = Postmaster {},
+postmaster = Postmaster
   save: ->
     model.asBlob()
     .then (blob)->
