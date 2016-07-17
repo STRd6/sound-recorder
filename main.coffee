@@ -1,5 +1,4 @@
-
-global.Observable = require "observable"
+saveAs = require "./lib/file_saver"
 
 getUserMedia = require "./lib/get_user_media"
 AudioContext = window.AudioContext or window.webkitAudioContext
@@ -58,6 +57,7 @@ if PACKAGE.name is "ROOT"
 # -------------------------------------------------
 # From here on down is our Whimsy.space integration
 
+isTop = (window.parent is window) and !opener
 
 Postmaster = require("postmaster")
 postmaster = Postmaster
@@ -66,10 +66,14 @@ postmaster = Postmaster
     .then (blob)->
       filePath = prompt "File name:", "sound.wav"
 
-      postmaster.invokeRemote "saveFile", blob, filePath
+      if isTop
+        saveAs blob, filePath
+      else
+        postmaster.invokeRemote "saveFile", blob, filePath
 
 # Apps must call childLoaded if they want to receive state/file data from OS
-postmaster.invokeRemote "childLoaded"
+unless isTop
+  postmaster.invokeRemote "childLoaded"
 
 document.addEventListener "keydown", (e) ->
   if e.ctrlKey

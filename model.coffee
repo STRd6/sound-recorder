@@ -1,5 +1,5 @@
+Observable = require "observable"
 Recorder = require "./lib/recorder"
-saveAs = require "./lib/file_saver"
 
 if localStorage.TRINKET_POLICY
   trinket = S3Trinket(JSON.parse(localStorage.TRINKET_POLICY))

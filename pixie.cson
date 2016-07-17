@@ -1,3 +1,7 @@
+title: "Sound Recorder - danielx.net"
+description: """
+  Record sounds directly from your browser and download them to you local PC.
+"""
 version: "0.2.0"
 remoteDependencies: [
 ]
