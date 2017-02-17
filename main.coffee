@@ -1,6 +1,5 @@
 saveAs = require "./lib/file_saver"
 
-getUserMedia = require "./lib/get_user_media"
 AudioContext = window.AudioContext or window.webkitAudioContext
 Model = require("./model")
 Viz = require "./lib/viz"
@@ -48,11 +47,10 @@ createCanvas = ->
 
   return canvas
 
-error = ->
-  console.log arguments
-
 if PACKAGE.name is "ROOT"
-  getUserMedia({audio: true}, createAudio, error)
+  navigator.mediaDevices.getUserMedia
+    audio: true
+  .then createAudio
 
 # -------------------------------------------------
 # From here on down is our Whimsy.space integration
