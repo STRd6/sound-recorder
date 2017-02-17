@@ -72,6 +72,8 @@ postmaster = Postmaster
 # Apps must call childLoaded if they want to receive state/file data from OS
 unless isTop
   postmaster.invokeRemote "childLoaded"
+  .catch (e) ->
+    console.error e
 
 document.addEventListener "keydown", (e) ->
   if e.ctrlKey
