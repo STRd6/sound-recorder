@@ -51,6 +51,9 @@ if PACKAGE.name is "ROOT"
   navigator.mediaDevices.getUserMedia
     audio: true
   .then createAudio
+  .catch (e) ->
+    if e.name is "DevicesNotFoundError"
+      alert "No devices found, is your microphone plugged in?"
 
 # -------------------------------------------------
 # From here on down is our Whimsy.space integration
