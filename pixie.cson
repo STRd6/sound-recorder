@@ -3,6 +3,9 @@ description: """
   Record sounds directly from your browser and download them to you local PC.
 """
 version: "0.3.1"
+publish:
+  s3:
+    basePath: "public/danielx.net"
 remoteDependencies: [
 ]
 dependencies:
