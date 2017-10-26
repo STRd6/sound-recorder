@@ -56,7 +56,7 @@
     },
     "pixie.cson": {
       "path": "pixie.cson",
-      "content": "title: \"HTML5 Sound Recorder - danielx.net\"\ndescription: \"\"\"\n  Record sounds directly from your browser and download them to you local PC.\n\"\"\"\nversion: \"0.3.1\"\nremoteDependencies: [\n]\ndependencies:\n  \"pixie-canvas\": \"distri/pixie-canvas:v0.9.2\"\n  \"sys\": \"STRd6/system-client:master\"\n",
+      "content": "title: \"HTML5 Sound Recorder - danielx.net\"\ndescription: \"\"\"\n  Record sounds directly from your browser and download them to you local PC.\n\"\"\"\nversion: \"0.3.1\"\npublish:\n  s3:\n    basePath: \"public/danielx.net\"\nremoteDependencies: [\n]\ndependencies:\n  \"pixie-canvas\": \"distri/pixie-canvas:v0.9.2\"\n  \"sys\": \"STRd6/system-client:master\"\n",
       "mode": "100644",
       "type": "blob"
     },
@@ -111,7 +111,7 @@
     },
     "pixie": {
       "path": "pixie",
-      "content": "module.exports = {\"title\":\"HTML5 Sound Recorder - danielx.net\",\"description\":\"Record sounds directly from your browser and download them to you local PC.\",\"version\":\"0.3.1\",\"remoteDependencies\":[],\"dependencies\":{\"pixie-canvas\":\"distri/pixie-canvas:v0.9.2\",\"sys\":\"STRd6/system-client:master\"}};",
+      "content": "module.exports = {\"title\":\"HTML5 Sound Recorder - danielx.net\",\"description\":\"Record sounds directly from your browser and download them to you local PC.\",\"version\":\"0.3.1\",\"publish\":{\"s3\":{\"basePath\":\"public/danielx.net\"}},\"remoteDependencies\":[],\"dependencies\":{\"pixie-canvas\":\"distri/pixie-canvas:v0.9.2\",\"sys\":\"STRd6/system-client:master\"}};",
       "type": "blob"
     },
     "style": {
@@ -137,6 +137,11 @@
     "title": "HTML5 Sound Recorder - danielx.net",
     "description": "Record sounds directly from your browser and download them to you local PC.",
     "version": "0.3.1",
+    "publish": {
+      "s3": {
+        "basePath": "public/danielx.net"
+      }
+    },
     "remoteDependencies": [],
     "dependencies": {
       "pixie-canvas": "distri/pixie-canvas:v0.9.2",
