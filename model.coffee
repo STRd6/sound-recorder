@@ -1,10 +1,9 @@
-Observable = require "observable"
 Recorder = require "./lib/recorder"
 
 if localStorage.TRINKET_POLICY
   trinket = S3Trinket(JSON.parse(localStorage.TRINKET_POLICY))
 
-module.exports = ({input}) ->
+module.exports = ({input, Observable, save}) ->
   recorder = new Recorder(input)
 
   player = document.createElement "audio"
@@ -32,6 +31,8 @@ module.exports = ({input}) ->
     asBlob: ->
       new Promise (resolve, reject) ->
         recorder.exportWAV resolve
+
+    save: save
 
   self.recording.observe (newValue) ->
     if newValue

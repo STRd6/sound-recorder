@@ -1,4 +1,5 @@
 .actions
-  button.stop(click=@stop) ■
-  button.play(click=@play) ▸
-  button.record(class=@recordingClass click=@record) ●
+  button(click=@stop) ■
+  button(click=@play) ▸
+  button(click=@save) ⬇️
+  button(class=@recordingClass click=@record) ●

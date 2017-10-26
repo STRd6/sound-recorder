@@ -1,11 +1,18 @@
 saveAs = require "./lib/file_saver"
 
+SystemClient = require "sys"
+SystemClient.applyExtensions()
+{system, application, postmaster, util, UI, Observable} = client = SystemClient()
+{Modal} = UI
+
+# Add our style after system client UI styles so we can override
+style = document.createElement "style"
+style.innerHTML = require "./style"
+document.head.appendChild style
+
 AudioContext = window.AudioContext or window.webkitAudioContext
 Model = require("./model")
 Viz = require "./lib/viz"
-
-{applyStylesheet} = require "./lib/util"
-applyStylesheet require "./style"
 
 createAudio = (stream) ->
   context = new AudioContext
@@ -13,6 +20,9 @@ createAudio = (stream) ->
 
   global.model = Model
     input: microphone
+    Observable: Observable
+    save: ->
+      handlers.save()
 
   document.body.appendChild require("./template")(model)
 
@@ -47,44 +57,44 @@ createCanvas = ->
 
   return canvas
 
-if PACKAGE.name is "ROOT"
-  navigator.mediaDevices.getUserMedia
-    audio: true
-  .then createAudio
-  .catch (e) ->
-    if e.name is "DevicesNotFoundError"
-      alert "No devices found, is your microphone plugged in?"
+navigator.mediaDevices.getUserMedia
+  audio: true
+.then createAudio
+.catch (e) ->
+  if e.name is "DevicesNotFoundError"
+    alert "No devices found, is your microphone plugged in?"
 
-# -------------------------------------------------
-# From here on down is our Whimsy.space integration
+handlers = util.FileIO(client)
 
-isTop = (window.parent is window) and !opener
-
-Postmaster = require("postmaster")
-postmaster = Postmaster
-  save: ->
+Object.assign handlers,
+  loadFile: (blob, path) -> Promise.reject "Recorder can't load files"
+  newFile: ->
+  saveData: ->
     model.asBlob()
-    .then (blob)->
-      filePath = prompt "File name:", "sound.wav"
-
-      if isTop
-        saveAs blob, filePath
-      else
-        postmaster.invokeRemote "saveFile", blob, filePath
-
-# Apps must call childLoaded if they want to receive state/file data from OS
-unless isTop
-  postmaster.invokeRemote "childLoaded"
-  .catch (e) ->
-    console.error e
 
 document.addEventListener "keydown", (e) ->
-  if e.ctrlKey
-    if e.keyCode is 83 # s
-      e.preventDefault()
+  {ctrlKey:ctrl, key, shiftKey:shift} = e
+  if ctrl
+    switch key
+      when "s"
+        e.preventDefault()
+        if shift
+          handlers.saveAs()
+        else
+          handlers.save()
 
-      if e.shiftKey
-        newPath = prompt "Path", filePath
-        setPath(newPath) if newPath
+system.ready()
+.catch (e) ->
+  handlers.saveAs = handlers.save = ->
+    Modal.prompt "File name", "sound.wav"
+    .then (name) ->
+      model.asBlob()
+      .then (blob) ->
+        url = window.URL.createObjectURL(blob)
+        a = document.createElement("a")
+        a.href = url
+        a.download = name
+        a.click()
+        window.URL.revokeObjectURL(url)
 
-      postmaster.save()
+  console.warn e
