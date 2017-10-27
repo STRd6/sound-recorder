@@ -1,8 +1,5 @@
 Recorder = require "./lib/recorder"
 
-if localStorage.TRINKET_POLICY
-  trinket = S3Trinket(JSON.parse(localStorage.TRINKET_POLICY))
-
 module.exports = ({input, Observable, save}) ->
   recorder = new Recorder(input)
 
